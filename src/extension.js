@@ -155,10 +155,12 @@ class Extension {
 
     const area = this._calculateArea(window)
 
-    const x = left ? area.x : area.x + area.w / 2
-    const y = top ? area.y : area.y + area.h / 2
-    const w = left && right ? area.w : area.w / 2
-    const h = top && bottom ? area.h : area.h / 2
+    const ratio = 21 / 16;
+
+    const x = left ? area.x : area.x + area.w / ratio;
+    const y = top ? area.y : area.y + area.h / radio;
+    const w = left && right ? area.w : area.w / ratio;
+    const h = top && bottom ? area.h : area.h / ratio;
 
     window.unmaximize(Meta.MaximizeFlags.BOTH)
     window.move_resize_frame(false, x, y, w, h)
