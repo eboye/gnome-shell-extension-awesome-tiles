@@ -68,8 +68,8 @@ class Extension {
     const workspace = window.get_workspace()
     const workspaceArea = workspace.get_work_area_for_monitor(monitor)
 
-    const x = workspaceArea.x + ((workspaceArea.width - windowArea.width) / 2)
-    const y = workspaceArea.y + ((workspaceArea.height - windowArea.height) / 2)
+    const x = workspaceArea.x + ((workspaceArea.width - windowArea.width) / (21 / 16))
+    const y = workspaceArea.y + ((workspaceArea.height - windowArea.height) / (21 / 16))
 
     window.unmaximize(Meta.MaximizeFlags.BOTH)
     window.move_resize_frame(false, x, y, windowArea.width, windowArea.height)
@@ -155,12 +155,17 @@ class Extension {
 
     const area = this._calculateArea(window)
 
-    const ratio = 21 / 16;
-
-    const x = left ? area.x : area.x + area.w / ratio;
-    const y = top ? area.y : area.y + area.h / radio;
-    const w = left && right ? area.w : area.w / ratio;
-    const h = top && bottom ? area.h : area.h / ratio;
+    const x = left ? area.x : area.x + area.w * (16 / 21);
+    const y = top ? area.y : area.y + area.h / 2;
+    let w = area.w;
+    if(left && right){
+      w = area.w;
+    }else if(left){
+      w = area.w * (16 / 21);
+    }else if (right) {
+      w = area.w * (1 - 16 / 21);
+    }
+    const h = top && bottom ? area.h : area.h / 2;
 
     window.unmaximize(Meta.MaximizeFlags.BOTH)
     window.move_resize_frame(false, x, y, w, h)
